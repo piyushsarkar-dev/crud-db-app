@@ -17,7 +17,7 @@ const page = () => {
     <section className="grid h-dvh place-items-center">
       <Card className="w-xl">
         <CardHeader>
-          <CardTitle className="text-center text-2xl">Signup Now</CardTitle>
+          <CardTitle className="text-center text-2xl">Create User</CardTitle>
         </CardHeader>
         <CardContent>
           <CreateForm />
