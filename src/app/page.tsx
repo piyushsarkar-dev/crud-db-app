@@ -1,3 +1,4 @@
+import UserDetails from "@/components/Customui/UserDetails";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -6,7 +7,11 @@ export const metadata: Metadata = {
 };
 
 const page = () => {
-  return <section className="grid h-dvh place-items-center"></section>;
+  return (
+    <section className="mt-20 grid">
+      <UserDetails />
+    </section>
+  );
 };
 
 export default page;

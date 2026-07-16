@@ -24,7 +24,7 @@ const CreateForm = () => {
       fullName: "",
       email: "",
       phone: "",
-      gender: "male",
+      gender: undefined,
     },
     mode: "all",
   });
@@ -36,6 +36,7 @@ const CreateForm = () => {
   return (
     <>
       <form
+        className="grid gap-2"
         noValidate
         onSubmit={handleSubmit(createFormHandler)}>
         <Controller
@@ -118,7 +119,11 @@ const CreateForm = () => {
             </Field>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button
+          className="mt-3"
+          type="submit">
+          Submit
+        </Button>
       </form>
     </>
   );
