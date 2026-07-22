@@ -1,7 +1,8 @@
 "use client";
 
-import { CreateUserSchema, createUserSchemaType } from "@/lib/zodSchema";
+import { CreateUserSchema, CreateUserSchemaType } from "@/lib/zodSchema";
 
+import createStudent from "@/server/createStudent";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { Button } from "../shadcnui/button";
@@ -10,27 +11,26 @@ import { Input } from "../shadcnui/input";
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "../shadcnui/select";
 
 const CreateForm = () => {
-  const { handleSubmit, control } = useForm<createUserSchemaType>({
+  const { handleSubmit, control, reset } = useForm<CreateUserSchemaType>({
     resolver: zodResolver(CreateUserSchema),
     defaultValues: {
       fullName: "",
       email: "",
       phone: "",
-      gender: undefined,
+      gender: "",
     },
     mode: "all",
   });
 
-  const createFormHandler = async (fData: createUserSchemaType) => {
-    console.log(fData);
+  const createFormHandler = async (fData: CreateUserSchemaType) => {
+    await createStudent(fData);
+    reset();
   };
 
   return (
@@ -63,22 +63,16 @@ const CreateForm = () => {
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel htmlFor={field.name}>Gender</FieldLabel>
               <Select
+                name={field.name}
                 value={field.value}
                 onValueChange={field.onChange}>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Select Gender" />
+                <SelectTrigger aria-invalid={fieldState.invalid}>
+                  <SelectValue placeholder="Select your gender" />
                 </SelectTrigger>
-
                 <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Gender</SelectLabel>
-
-                    <SelectItem value="male">Male</SelectItem>
-
-                    <SelectItem value="female">Female</SelectItem>
-
-                    <SelectItem value="other">Other</SelectItem>
-                  </SelectGroup>
+                  <SelectItem value="male">Male</SelectItem>
+                  <SelectItem value="female">Female</SelectItem>
+                  <SelectItem value="others">Others</SelectItem>
                 </SelectContent>
               </Select>
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}

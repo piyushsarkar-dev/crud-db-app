@@ -12,4 +12,4 @@ export const CreateUserSchema = z.object({
   gender: z.string(),
 });
 
-export type createUserSchemaType = z.infer<typeof CreateUserSchema>;
+export type CreateUserSchemaType = z.infer<typeof CreateUserSchema>;
