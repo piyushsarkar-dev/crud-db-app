@@ -1,15 +1,13 @@
 import { z } from "zod";
 
-export const CreateUserSchema = z.object({
+export const createUserSchema = z.object({
   fullName: z
     .string()
-    .min(3, "Name must be at least 3 Characters")
-    .max(35, { error: " must be between 35 Characters" }),
-  phone: z
-    .string()
-    .regex(/^\+91\d{10}$/, "Phone number must be in format: +91 87770XXXXX"),
+    .min(6, { error: "Full Name must be at least 6 Characters" })
+    .max(35, { error: "Full Name must be between 35 Characters" }),
+  phone: z.string().length(13, { error: "" }).startsWith("+91", { error: "" }),
   email: z.email("Invalid email address"),
-  gender: z.string(),
+  gender: z.string().min(4, { error: "" }),
 });
 
-export type CreateUserSchemaType = z.infer<typeof CreateUserSchema>;
+export type CreateUserSchemaType = z.infer<typeof createUserSchema>;

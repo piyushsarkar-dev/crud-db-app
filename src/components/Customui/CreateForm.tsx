@@ -1,9 +1,9 @@
 "use client";
 
-import { CreateUserSchema, CreateUserSchemaType } from "@/lib/zodSchema";
-
+import { createUserSchema, CreateUserSchemaType } from "@/lib/zodSchema";
 import createStudent from "@/server/createStudent";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { LoaderIcon, SendIcon } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { Button } from "../shadcnui/button";
@@ -18,8 +18,13 @@ import {
 } from "../shadcnui/select";
 
 const CreateForm = () => {
-  const { handleSubmit, control, reset } = useForm<CreateUserSchemaType>({
-    resolver: zodResolver(CreateUserSchema),
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { isSubmitting },
+  } = useForm({
+    resolver: zodResolver(createUserSchema),
     defaultValues: {
       fullName: "",
       email: "",
@@ -33,99 +38,107 @@ const CreateForm = () => {
     const { isSucess, message } = await createStudent(fData);
     if (isSucess) {
       toast.success(message);
+      reset();
     } else {
       toast.error(message);
     }
-    reset();
   };
 
   return (
-    <>
-      <form
-        className="grid gap-2"
-        noValidate
-        onSubmit={handleSubmit(createFormHandler)}>
-        <Controller
-          name="fullName"
-          control={control}
-          render={({ field, fieldState }) => (
-            <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor={field.name}>Full Name</FieldLabel>
-              <Input
-                {...field}
-                id={field.name}
-                aria-invalid={fieldState.invalid}
-                placeholder="Enter Your Full Name"
-                autoComplete="family-name"
-              />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-            </Field>
-          )}
-        />
-        <Controller
-          name="gender"
-          control={control}
-          render={({ field, fieldState }) => (
-            <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor={field.name}>Gender</FieldLabel>
-              <Select
-                name={field.name}
-                value={field.value}
-                onValueChange={field.onChange}>
-                <SelectTrigger aria-invalid={fieldState.invalid}>
-                  <SelectValue placeholder="Select your gender" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="male">Male</SelectItem>
-                  <SelectItem value="female">Female</SelectItem>
-                  <SelectItem value="others">Others</SelectItem>
-                </SelectContent>
-              </Select>
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-            </Field>
-          )}
-        />
-        <Controller
-          name="email"
-          control={control}
-          render={({ field, fieldState }) => (
-            <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor={field.name}>Email Adress</FieldLabel>
-              <Input
-                {...field}
-                id={field.name}
-                aria-invalid={fieldState.invalid}
-                placeholder="Enter Your Email Adress"
-                autoComplete="email"
-              />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-            </Field>
-          )}
-        />
-        <Controller
-          name="phone"
-          control={control}
-          render={({ field, fieldState }) => (
-            <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor={field.name}>Phone Number +91</FieldLabel>
-              <Input
-                {...field}
-                id={field.name}
-                aria-invalid={fieldState.invalid}
-                placeholder="Enter Your Phone Number"
-                autoComplete="tel"
-              />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-            </Field>
-          )}
-        />
-        <Button
-          className="mt-3"
-          type="submit">
-          Submit
-        </Button>
-      </form>
-    </>
+    <form
+      onSubmit={handleSubmit(createFormHandler)}
+      className="grid gap-4"
+      noValidate>
+      <Controller
+        name="fullName"
+        control={control}
+        render={({ field, fieldState }) => (
+          <Field data-invalid={fieldState.invalid}>
+            <FieldLabel htmlFor={field.name}>Full Name</FieldLabel>
+            <Input
+              {...field}
+              id={field.name}
+              aria-invalid={fieldState.invalid}
+              type="text"
+              placeholder="Enter Your Full Name"
+              autoComplete="family-name"
+            />
+            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+          </Field>
+        )}
+      />
+      <Controller
+        name="gender"
+        control={control}
+        render={({ field, fieldState }) => (
+          <Field data-invalid={fieldState.invalid}>
+            <FieldLabel htmlFor={field.name}>Gender</FieldLabel>
+            <Select
+              name={field.name}
+              value={field.value}
+              onValueChange={field.onChange}>
+              <SelectTrigger aria-invalid={fieldState.invalid}>
+                <SelectValue placeholder="Select your gender" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Male">Male</SelectItem>
+                <SelectItem value="Female">Female</SelectItem>
+                <SelectItem value="Others">Others</SelectItem>
+              </SelectContent>
+            </Select>
+            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+          </Field>
+        )}
+      />
+      <Controller
+        name="email"
+        control={control}
+        render={({ field, fieldState }) => (
+          <Field data-invalid={fieldState.invalid}>
+            <FieldLabel htmlFor={field.name}>Email Adress</FieldLabel>
+            <Input
+              {...field}
+              id={field.name}
+              aria-invalid={fieldState.invalid}
+              type="email"
+              placeholder="Enter Your Email Adress"
+              autoComplete="email"
+            />
+            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+          </Field>
+        )}
+      />
+      <Controller
+        name="phone"
+        control={control}
+        render={({ field, fieldState }) => (
+          <Field data-invalid={fieldState.invalid}>
+            <FieldLabel htmlFor={field.name}>Phone Number +91</FieldLabel>
+            <Input
+              {...field}
+              id={field.name}
+              aria-invalid={fieldState.invalid}
+              type="tel"
+              placeholder="Enter Your Phone Number"
+              autoComplete="tel"
+            />
+            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+          </Field>
+        )}
+      />
+      <Button
+        disabled={isSubmitting}
+        type="submit">
+        {isSubmitting ?
+          <>
+            <LoaderIcon className="animate-spin" /> Submitinng
+          </>
+        : <>
+            <SendIcon /> Submit
+          </>
+        }
+      </Button>
+    </form>
   );
 };
 

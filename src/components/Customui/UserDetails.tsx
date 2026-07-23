@@ -1,11 +1,11 @@
 import { User } from "@generated/prisma/client";
 import {
-  Mail,
-  Pencil,
-  Phone,
-  Trash2,
+  MailIcon,
+  PencilIcon,
+  PhoneIcon,
+  Trash2Icon,
   UserRound,
-  VenusAndMars,
+  VenusAndMarsIcon,
 } from "lucide-react";
 import { Button } from "../shadcnui/button";
 import {
@@ -49,7 +49,7 @@ const UserDetails = ({
 
         <div className="flex items-center gap-4 rounded-lg border p-4">
           <div className="bg-muted rounded-full p-2">
-            <Mail className="size-5" />
+            <MailIcon className="size-5" />
           </div>
 
           <div>
@@ -60,7 +60,7 @@ const UserDetails = ({
 
         <div className="flex items-center gap-4 rounded-lg border p-4">
           <div className="bg-muted rounded-full p-2">
-            <Phone className="size-5" />
+            <PhoneIcon className="size-5" />
           </div>
 
           <div>
@@ -71,7 +71,7 @@ const UserDetails = ({
 
         <div className="flex items-center gap-4 rounded-lg border p-4">
           <div className="bg-muted rounded-full p-2">
-            <VenusAndMars className="size-5" />
+            <VenusAndMarsIcon className="size-5" />
           </div>
 
           <div>
@@ -83,14 +83,14 @@ const UserDetails = ({
 
       <CardFooter className="flex gap-3 border-t pt-6">
         <Button className="flex-1">
-          <Pencil className="size-4" />
+          <PencilIcon className="size-4" />
           Edit
         </Button>
 
         <Button
           variant="destructive"
           className="flex-1">
-          <Trash2 className="size-4" />
+          <Trash2Icon className="size-4" />
           Delete
         </Button>
       </CardFooter>
