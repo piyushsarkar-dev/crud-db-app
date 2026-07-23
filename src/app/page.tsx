@@ -1,4 +1,5 @@
 import UserDetails from "@/components/Customui/UserDetails";
+import prisma from "@/lib/database/dbClient";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -6,10 +7,21 @@ export const metadata: Metadata = {
   description: "List user page of CRUD DB App",
 };
 
-const page = () => {
+const page = async () => {
+  const allStudents = await prisma.user.findMany();
+  if (allStudents.length === 0) {
+    <section className="mt-20 grid">
+      <div>No User Found</div>
+    </section>;
+  }
   return (
     <section className="mt-20 grid">
-      <UserDetails />
+      {allStudents.map((userId) => (
+        <UserDetails
+          key={userId.id}
+          userData={userId}
+        />
+      ))}
     </section>
   );
 };

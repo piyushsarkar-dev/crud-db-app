@@ -1,4 +1,12 @@
-import { Mail, Pencil, Phone, Trash2, User, VenusAndMars } from "lucide-react";
+import { User } from "@generated/prisma/client";
+import {
+  Mail,
+  Pencil,
+  Phone,
+  Trash2,
+  UserRound,
+  VenusAndMars,
+} from "lucide-react";
 import { Button } from "../shadcnui/button";
 import {
   Card,
@@ -9,7 +17,12 @@ import {
   CardTitle,
 } from "../shadcnui/card";
 
-const UserDetails = () => {
+type UserCardProps = {
+  userData: User;
+};
+const UserDetails = ({
+  userData: { email, fullName, gender, phone },
+}: UserCardProps) => {
   return (
     <Card className="w-full max-w-md shadow-lg">
       <CardHeader className="space-y-4 text-center">
@@ -25,12 +38,12 @@ const UserDetails = () => {
       <CardContent className="space-y-4">
         <div className="flex items-center gap-4 rounded-lg border p-4">
           <div className="bg-muted rounded-full p-2">
-            <User className="size-5" />
+            <UserRound className="size-5" />
           </div>
 
           <div>
             <p className="text-muted-foreground text-xs">Full Name</p>
-            <p className="font-medium">Piyush Sarkar</p>
+            <p className="font-medium">{fullName}</p>
           </div>
         </div>
 
@@ -41,7 +54,7 @@ const UserDetails = () => {
 
           <div>
             <p className="text-muted-foreground text-xs">Email</p>
-            <p className="font-medium">hi.mrpiyush@gmail.com</p>
+            <p className="font-medium">{email}</p>
           </div>
         </div>
 
@@ -52,7 +65,7 @@ const UserDetails = () => {
 
           <div>
             <p className="text-muted-foreground text-xs">Phone</p>
-            <p className="font-medium">+91 1112223399</p>
+            <p className="font-medium">{phone}</p>
           </div>
         </div>
 
@@ -63,7 +76,7 @@ const UserDetails = () => {
 
           <div>
             <p className="text-muted-foreground text-xs">Gender</p>
-            <p className="font-medium">Male</p>
+            <p className="font-medium">{gender}</p>
           </div>
         </div>
       </CardContent>

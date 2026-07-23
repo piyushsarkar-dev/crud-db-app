@@ -5,6 +5,7 @@ import { CreateUserSchema, CreateUserSchemaType } from "@/lib/zodSchema";
 import createStudent from "@/server/createStudent";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { Button } from "../shadcnui/button";
 import { Field, FieldError, FieldLabel } from "../shadcnui/field";
 import { Input } from "../shadcnui/input";
@@ -29,7 +30,12 @@ const CreateForm = () => {
   });
 
   const createFormHandler = async (fData: CreateUserSchemaType) => {
-    await createStudent(fData);
+    const { isSucess, message } = await createStudent(fData);
+    if (isSucess) {
+      toast.success(message);
+    } else {
+      toast.error(message);
+    }
     reset();
   };
 
