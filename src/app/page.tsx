@@ -11,7 +11,7 @@ const page = async () => {
   const allStudents = await prisma.user.findMany();
   if (allStudents.length === 0) {
     return (
-      <section className="mt-20 grid">
+      <section className="mt-20 grid h-dvh place-items-center">
         <div>No User Found</div>
       </section>
     );

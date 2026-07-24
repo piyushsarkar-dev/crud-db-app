@@ -3,7 +3,6 @@ import {
   MailIcon,
   PencilIcon,
   PhoneIcon,
-  Trash2Icon,
   UserRound,
   VenusAndMarsIcon,
 } from "lucide-react";
@@ -16,6 +15,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../shadcnui/card";
+import DeleteButton from "./DeleteButton";
 
 type UserCardProps = {
   userData: User;
@@ -86,13 +86,7 @@ const UserDetails = ({
           <PencilIcon className="size-4" />
           Edit
         </Button>
-
-        <Button
-          variant="destructive"
-          className="flex-1">
-          <Trash2Icon className="size-4" />
-          Delete
-        </Button>
+        <DeleteButton />
       </CardFooter>
     </Card>
   );
