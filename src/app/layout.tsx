@@ -1,5 +1,7 @@
 import Header from "@/components/Layout/Header";
 import ThemeProvider from "@/components/Providers/ThemeProvider";
+import ToastProvider from "@/components/Providers/ToastProvider";
+import ToastButton from "@/components/ToastButton";
 import { geistMono, geistSans, interHeading } from "@/lib/fonts";
 import { LayoutProps } from "@/lib/types";
 import { cn } from "@/lib/utils";
@@ -22,7 +24,9 @@ const RootLayout = ({ children }: LayoutProps) => {
           defaultTheme="dark"
           enableSystem={false}>
           <Header />
+          <ToastProvider />
           <main className="mx-auto max-w-7xl">{children}</main>
+        
         </ThemeProvider>
       </body>
     </html>
