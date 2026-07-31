@@ -1,4 +1,10 @@
 import CreateForm from "@/components/customui/CreateForm";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/shadcnui/card";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -7,9 +13,16 @@ export const metadata: Metadata = {
 };
 const page = () => {
   return (
-    <div className="mt-20 grid gap-4 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
-      <CreateForm />
-    </div>
+    <section className="grid h-dvh place-items-center">
+      <Card className="w-xl">
+        <CardHeader>
+          <CardTitle className="text-center text-2xl">Create User</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <CreateForm />
+        </CardContent>
+      </Card>
+    </section>
   );
 };
 
