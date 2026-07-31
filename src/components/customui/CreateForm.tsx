@@ -205,7 +205,7 @@ const CreateForm = () => {
           type="submit">
           {isSubmitting ?
             <>
-              <LoaderIcon className="animate-spin" /> Submitinng
+              <LoaderIcon className="animate-spin" /> Submiting
             </>
           : <>
               <SendIcon /> Submit

@@ -8,17 +8,17 @@ export const metadata: Metadata = {
 };
 
 const page = async () => {
-  const allStudents = await prisma.user.findMany();
-  if (allStudents.length === 0) {
+  const allUsers = await prisma.user.findMany();
+  if (allUsers.length === 0) {
     return (
-      <section>
-        <div className="h-dvh text-center text-2xl"> No Data Found</div>
+      <section className="flex h-dvh items-center justify-center">
+        <div className="text-center text-4xl font-semibold">No Data Found</div>
       </section>
     );
   }
   return (
     <div className="mt-20 grid gap-4 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
-      {allStudents.map((items) => (
+      {allUsers.map((items) => (
         <UserDetails
           userData={items}
           key={items.id}

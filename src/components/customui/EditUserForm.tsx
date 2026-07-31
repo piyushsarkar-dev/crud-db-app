@@ -1,9 +1,13 @@
 "use client";
 
 import { registerFormSchema, RegisterSchematype } from "@/lib/zodSchema";
+import editUser from "@/server/editUser";
+import { User } from "@generated/prisma/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderIcon, UserPenIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { Button } from "../shadcnui/button";
 import { Field, FieldError, FieldLabel } from "../shadcnui/field";
 import { Input } from "../shadcnui/input";
@@ -15,35 +19,38 @@ import {
   SelectValue,
 } from "../shadcnui/select";
 
-const EditUserForm = () => {
+type EditUserFormProps = {
+  userData: User;
+};
+
+const EditUserForm = ({ userData }: EditUserFormProps) => {
+  const { push } = useRouter();
   const {
     handleSubmit,
     control,
-    formState: { isSubmitting },
-    reset,
-    setValue,
-    clearErrors,
+    formState: { isSubmitting, isDirty },
   } = useForm({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
-      fullName: "",
-      email: "",
-      gender: "",
-      phone: "+91",
+      fullName: userData.fullName,
+      email: userData.email,
+      gender: userData.gender,
+      phone: userData.phone,
     },
     mode: "all",
   });
 
   const updateFormHandler = async (fData: RegisterSchematype) => {
-    // const { isSuccess, message } = await createUser(fData);
+    const { isSuccess, message } = await editUser(userData.id, fData);
     await new Promise((r) => setTimeout(r, 1500));
     console.log(fData);
 
-    // if (isSuccess) {
-    //   toast.success(message);
-    // } else {
-    //   toast.error(message);
-    // }
+    if (isSuccess) {
+      toast.success(message);
+      push("/");
+    } else {
+      toast.error(message);
+    }
   };
   return (
     <form
@@ -139,7 +146,7 @@ const EditUserForm = () => {
 
       <Button
         className="w-full"
-        disabled={isSubmitting}
+        disabled={isSubmitting || !isDirty}
         type="submit">
         {isSubmitting ?
           <>

@@ -5,6 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/shadcnui/card";
+import prisma from "@/lib/dbClient/prisma";
 
 type EditPageProps = {
   params: Promise<{ userId: string }>;
@@ -12,7 +13,13 @@ type EditPageProps = {
 
 const page = async ({ params }: EditPageProps) => {
   const { userId } = await params;
-  console.log(userId);
+
+  const Users = await prisma.user.findUniqueOrThrow({
+    where: {
+      id: userId,
+    },
+  });
+  console.log(Users);
 
   return (
     <section className="grid h-dvh place-items-center">
@@ -21,7 +28,7 @@ const page = async ({ params }: EditPageProps) => {
           <CardTitle className="text-center text-2xl">Edit User</CardTitle>
         </CardHeader>
         <CardContent>
-          <EditUserForm />
+          <EditUserForm userData={Users} />
         </CardContent>
       </Card>
     </section>
