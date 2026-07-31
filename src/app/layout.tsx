@@ -17,15 +17,13 @@ const RootLayout = ({ children }: LayoutProps) => {
       )}
       suppressHydrationWarning>
       <body>
-        <Header />
-        <main>
-          <ThemeProvider
-            attribute={"class"}
-            defaultTheme="dark"
-            enableSystem={false}>
-            {children}
-          </ThemeProvider>
-        </main>
+        <ThemeProvider
+          attribute={"class"}
+          defaultTheme="dark"
+          enableSystem={false}>
+          <Header />
+          <main className="mx-auto max-w-7xl">{children}</main>
+        </ThemeProvider>
       </body>
     </html>
   );
