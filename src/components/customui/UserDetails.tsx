@@ -17,9 +17,14 @@ import {
   CardTitle,
 } from "../shadcnui/card";
 
+import { User } from "@generated/prisma/client";
 import DeleteButton from "./DeleteButton";
 
-const UserDetails = () => {
+type UserDetailsProps = {
+  userData: User;
+};
+
+const UserDetails = ({ userData }: UserDetailsProps) => {
   return (
     <Card className="w-full max-w-sm shadow-lg">
       <CardHeader className="space-y-4 text-center">
@@ -41,11 +46,9 @@ const UserDetails = () => {
               <p className="text-muted-foreground text-xs">Full Name</p>
 
               <div className="mt-1 flex items-center gap-2">
-                <p className="font-medium">Piyush Sarkar</p>
+                <p className="font-medium">{userData.fullName}</p>
 
-                <Badge
-                  variant="secondary"
-                  className="gap-1 rounded-full px-2">
+                <Badge variant="secondary" className="gap-1 rounded-full px-2">
                   <BadgeCheckIcon className="size-3.5 text-sky-500" />
                   Verified
                 </Badge>
@@ -60,7 +63,7 @@ const UserDetails = () => {
 
             <div>
               <p className="text-muted-foreground text-xs">Email</p>
-              <p className="font-medium">hi.mrpiyush@gmail.com</p>
+              <p className="font-medium">{userData.email}</p>
             </div>
           </div>
 
@@ -71,7 +74,7 @@ const UserDetails = () => {
 
             <div>
               <p className="text-muted-foreground text-xs">Phone</p>
-              <p className="font-medium">+91 8777098765</p>
+              <p className="font-medium">{userData.phone}</p>
             </div>
           </div>
 
@@ -82,7 +85,7 @@ const UserDetails = () => {
 
             <div>
               <p className="text-muted-foreground text-xs">Gender</p>
-              <p className="font-medium">Male</p>
+              <p className="font-medium">{userData.gender}</p>
             </div>
           </div>
         </div>
@@ -94,7 +97,7 @@ const UserDetails = () => {
           Edit
         </Button>
 
-        <DeleteButton />
+        <DeleteButton userDel={userData.id} />
       </CardFooter>
     </Card>
   );

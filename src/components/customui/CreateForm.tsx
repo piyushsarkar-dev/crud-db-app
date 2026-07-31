@@ -2,10 +2,13 @@
 
 import generateUserDetails from "@/hooks/genarateUserDetails";
 import { registerFormSchema, RegisterSchematype } from "@/lib/zodSchema";
+import createUser from "@/server/createUser";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderIcon, RefreshCcwIcon, SendIcon, UserRound } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { Button } from "../shadcnui/button";
 import { Field, FieldError, FieldLabel } from "../shadcnui/field";
 import { Input } from "../shadcnui/input";
@@ -18,6 +21,7 @@ import {
 } from "../shadcnui/select";
 
 const CreateForm = () => {
+  const { push } = useRouter();
   const {
     handleSubmit,
     control,
@@ -36,8 +40,15 @@ const CreateForm = () => {
   });
 
   const createFormHandler = async (fData: RegisterSchematype) => {
+    const { isSuccess, message } = await createUser(fData);
     await new Promise((r) => setTimeout(r, 1500));
     console.log(fData);
+    if (isSuccess) {
+      toast.success(message);
+      push("/");
+    } else {
+      toast.error(message);
+    }
   };
 
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -52,6 +63,8 @@ const CreateForm = () => {
     setIsRefreshing(false);
   };
 
+  const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
+  const [isLoading, setIsLoading] = useState(false);
   const genarateDetailsHandler = async () => {
     setIsLoading(true);
 
@@ -73,10 +86,6 @@ const CreateForm = () => {
 
     setIsLoading(false);
   };
-
-  const [isLoading, setIsLoading] = useState(false);
-
-  const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
   return (
     <form
