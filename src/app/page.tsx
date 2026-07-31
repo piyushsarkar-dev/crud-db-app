@@ -1,3 +1,4 @@
+import UserDetails from "@/components/customui/UserDetails";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -7,7 +8,9 @@ export const metadata: Metadata = {
 
 const page = () => {
   return (
-    <div className="mt-20 grid gap-4 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3"></div>
+    <div className="mt-20 grid gap-4 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
+      <UserDetails />
+    </div>
   );
 };
 
