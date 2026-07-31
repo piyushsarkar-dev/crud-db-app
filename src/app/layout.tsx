@@ -1,3 +1,4 @@
+import Header from "@/components/Layout/Header";
 import ThemeProvider from "@/components/Providers/ThemeProvider";
 import { geistMono, geistSans, interHeading } from "@/lib/fonts";
 import { LayoutProps } from "@/lib/types";
@@ -16,12 +17,15 @@ const RootLayout = ({ children }: LayoutProps) => {
       )}
       suppressHydrationWarning>
       <body>
-        <ThemeProvider
-          attribute={"class"}
-          defaultTheme="dark"
-          enableSystem={false}>
-          {children}
-        </ThemeProvider>
+        <Header />
+        <main>
+          <ThemeProvider
+            attribute={"class"}
+            defaultTheme="dark"
+            enableSystem={false}>
+            {children}
+          </ThemeProvider>
+        </main>
       </body>
     </html>
   );
