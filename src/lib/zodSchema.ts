@@ -3,11 +3,13 @@ import z from "zod";
 export const registerFormSchema = z.object({
   fullName: z
     .string()
-    .min(7, { error: "Full Name must be at least 6 Characters" })
+    .min(6, { error: "Full Name must be at least 6 Characters" })
     .max(35, { error: "Full Name must be between 35 Characters" }),
-  email: z.email("Invalid Email Adress"),
+  email: z
+    .email("Invalid Email Adress")
+    .max(64, { error: "The Value Must Be Under 64 Characters" }),
   phone: z.string().length(13, { error: "Follow The Format : +918777XXXXXX" }),
-  gender: z.string().min(4, { error: "Please Select A Gender" }),
+  gender: z.string().min(1, { error: "Please Select A Gender" }),
 });
 
 export type RegisterSchematype = z.infer<typeof registerFormSchema>;

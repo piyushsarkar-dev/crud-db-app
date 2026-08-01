@@ -52,26 +52,14 @@ const CreateForm = () => {
     }
   };
 
-  const [isRefreshing, setIsRefreshing] = useState(false);
-
-  const mainFormRefresh = async () => {
-    setIsRefreshing(true);
-
-    await new Promise((r) => setTimeout(r, 1500));
-
-    reset();
-
-    setIsRefreshing(false);
-  };
-
-  const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
   const [isLoading, setIsLoading] = useState(false);
+
   const genarateDetailsHandler = async () => {
     setIsLoading(true);
 
     const { fullName, email, phone, gender } = generateUserDetails();
 
-    await delay(1000);
+    await new Promise((r) => setTimeout(r, 1500));
 
     setValue("fullName", fullName);
     setValue("email", email);
@@ -182,21 +170,12 @@ const CreateForm = () => {
 
       <span className="grid w-full grid-cols-2 gap-3">
         <Button
-          onClick={mainFormRefresh}
+          onClick={() => reset()}
           type="button"
           variant="destructive"
-          className="flex-1"
-          disabled={isRefreshing}>
-          {isRefreshing ?
-            <>
-              <LoaderIcon className="animate-spin" />
-              Refreshing...
-            </>
-          : <>
-              <RefreshCcwIcon size={16} />
-              Refresh
-            </>
-          }
+          className="flex-1">
+          <RefreshCcwIcon size={16} />
+          Reset
         </Button>
 
         <Button

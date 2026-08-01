@@ -1,4 +1,6 @@
+import { PlusIcon } from "lucide-react";
 import Link from "next/link";
+import { buttonVariants } from "../shadcnui/button";
 import ThemeToggleButton from "./ThemeToggleButton";
 
 const Header = () => {
@@ -16,8 +18,11 @@ const Header = () => {
         </Link>
 
         <nav className="flex items-center gap-4">
-          <Link href={"/"}>Home</Link>
-          <Link href={"/create"}>Create</Link>
+          <Link
+            href={"/create"}
+            className={buttonVariants({ variant: "secondary" })}>
+            <PlusIcon /> Create
+          </Link>
 
           <ThemeToggleButton />
         </nav>

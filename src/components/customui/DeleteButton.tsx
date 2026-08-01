@@ -14,18 +14,18 @@ const DeleteButton = ({ userDel }: DeleteButtonProps) => {
   const [remove, setRemove] = useState(false);
 
   const handleClean = async () => {
-    const { isSuccess, message } = await deleteUser(userDel);
     setRemove(true);
+
+    await new Promise((r) => setTimeout(r, 1500));
+
+    const { isSuccess, message } = await deleteUser(userDel);
+
     if (isSuccess) {
       toast.success(message);
     } else {
       toast.error(message);
     }
-    await deleteUser(userDel);
 
-    await new Promise((r) => {
-      setTimeout(r, 1000);
-    });
     setRemove(false);
   };
 

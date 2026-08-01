@@ -19,7 +19,6 @@ const page = async ({ params }: EditPageProps) => {
       id: userId,
     },
   });
-  console.log(Users);
 
   return (
     <section className="grid h-dvh place-items-center">

@@ -4,13 +4,13 @@ import prisma from "@/lib/dbClient/prisma";
 import { RegisterSchematype } from "@/lib/zodSchema";
 import { revalidatePath } from "next/cache";
 
-const editUser = async (UserDel: string, eData: RegisterSchematype) => {
+const editUser = async (UserDel: string, fData: RegisterSchematype) => {
   try {
     await prisma.user.update({
       where: {
         id: UserDel,
       },
-      data: eData,
+      data: fData,
     });
 
     revalidatePath("/");

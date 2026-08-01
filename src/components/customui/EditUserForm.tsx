@@ -41,9 +41,8 @@ const EditUserForm = ({ userData }: EditUserFormProps) => {
   });
 
   const updateFormHandler = async (fData: RegisterSchematype) => {
-    const { isSuccess, message } = await editUser(userData.id, fData);
     await new Promise((r) => setTimeout(r, 1500));
-    console.log(fData);
+    const { isSuccess, message } = await editUser(userData.id, fData);
 
     if (isSuccess) {
       toast.success(message);
@@ -58,9 +57,7 @@ const EditUserForm = ({ userData }: EditUserFormProps) => {
       className="grid w-full max-w-xl grid-cols-1 place-items-center gap-3"
       noValidate>
       <div className="flex w-full justify-center">
-        <div className="bg-muted rounded-full p-3">
-          <UserPenIcon className="h-12 w-12" />
-        </div>
+        <UserPenIcon className="bg-muted h-12 w-12 rounded-full p-3" />
       </div>
       <Controller
         name="fullName"
@@ -129,13 +126,13 @@ const EditUserForm = ({ userData }: EditUserFormProps) => {
         render={({ field, fieldState }) => (
           <Field data-invalid={fieldState.invalid}>
             <FieldLabel htmlFor={field.name}>
-              Enter Your Email Adress
+              Enter Your Email Address
             </FieldLabel>
             <Input
               {...field}
               id={field.name}
               aria-invalid={fieldState.invalid}
-              placeholder="Email Adress"
+              placeholder="Email Address"
               autoComplete="email"
             />
 

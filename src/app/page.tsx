@@ -20,8 +20,8 @@ const page = async () => {
     <div className="mt-20 grid gap-4 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
       {allUsers.map((items) => (
         <UserDetails
-          userData={items}
           key={items.id}
+          userData={items}
         />
       ))}
     </div>
