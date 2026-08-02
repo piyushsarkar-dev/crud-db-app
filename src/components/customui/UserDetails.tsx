@@ -30,14 +30,15 @@ const UserDetails = ({ userData }: UserDetailsProps) => {
     <Card className="w-full max-w-sm shadow-lg">
       <CardHeader className="space-y-4 text-center">
         <CardTitle className="text-2xl">User Details</CardTitle>
-
         <div className="bg-border mx-auto h-px w-32" />
       </CardHeader>
 
-      <CardContent className="grid gap-4">
-        <div className="flex items-center gap-4 rounded-lg border p-4">
-          <div className="bg-muted rounded-full p-2">
-            <UserRound className="size-5" />
+      <CardContent>
+        <div className="grid gap-4">
+          <div className="flex items-center gap-4 rounded-lg border p-4">
+            <div className="bg-muted rounded-full p-2">
+              <UserRound className="size-5" />
+            </div>
 
             <div className="flex-1">
               <p className="text-muted-foreground text-xs">Full Name</p>
