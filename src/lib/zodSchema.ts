@@ -6,7 +6,7 @@ export const registerFormSchema = z.object({
     .min(6, { error: "Full Name must be at least 6 Characters" })
     .max(35, { error: "Full Name must be between 35 Characters" }),
   email: z
-    .email("Invalid Email Adress")
+    .email("Invalid Email Address")
     .max(64, { error: "The Value Must Be Under 64 Characters" }),
   phone: z.string().length(13, { error: "Follow The Format : +918777XXXXXX" }),
   gender: z.string().min(1, { error: "Please Select A Gender" }),
