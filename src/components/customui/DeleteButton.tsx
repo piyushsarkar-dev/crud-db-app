@@ -27,16 +27,22 @@ const DeleteButton = ({ userDel }: DeleteButtonProps) => {
 
   const handleConfirmDelete = async () => {
     setRemove(true);
-    const { isSuccess, message } = await deleteUser(userDel);
 
-    if (isSuccess) {
-      toast.add({ type: "success", title: message });
-    } else {
-      toast.add({ type: "error", title: message });
+    try {
+      const { isSuccess, message } = await deleteUser(userDel);
+
+      if (isSuccess) {
+        toast.add({ type: "success", title: message });
+      } else {
+        toast.add({ type: "error", title: message });
+      }
+    } catch (error) {
+      console.error(error);
+      toast.add({ type: "error", title: "Failed to delete user ❌" });
+    } finally {
+      setRemove(false);
+      setOpen(false);
     }
-
-    setRemove(false);
-    setOpen(false);
   };
 
   return (
