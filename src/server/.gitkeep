@@ -1,0 +1,7 @@
+# Git Directory Preservation File
+
+This file ensures the `server` directory is tracked by Git, as Git does not track empty directories.
+
+## Directory Purpose
+
+The `server` directory is organizational only. Modules become Server Functions through the `"use server"` directive, while API endpoints must remain `route.ts` files under `src/app`.

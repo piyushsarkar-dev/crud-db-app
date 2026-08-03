@@ -1,0 +1,39 @@
+import Header from "@/components/Layout/Header";
+import ThemeProvider from "@/components/Providers/ThemeProvider";
+import { geistMono, geistSans, interHeading } from "@/lib/fonts";
+import { LayoutProps } from "@/lib/types";
+import { cn } from "@/lib/utils";
+import { Metadata } from "next";
+import "./globals.css";
+
+export const metadata: Metadata = {
+  title: "CRUD DB App",
+  description: "CRUD DB app for managing users.",
+};
+
+const RootLayout = ({ children }: LayoutProps) => {
+  return (
+    <html
+      lang="en"
+      className={cn(
+        "antialiased",
+        geistSans.variable,
+        geistMono.variable,
+        interHeading.variable,
+      )}
+      suppressHydrationWarning>
+      <body>
+        <ThemeProvider
+          attribute={"class"}
+          defaultTheme="dark"
+          enableSystem={false}>
+          <Header />
+
+          <main className="mx-auto max-w-7xl pt-20">{children}</main>
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+};
+
+export default RootLayout;
