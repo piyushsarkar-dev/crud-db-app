@@ -2,12 +2,17 @@
 
 import prisma from "@/lib/dbClient/prisma";
 import { revalidatePath } from "next/cache";
+import { z } from "zod";
 
-const deleteUser = async (UserDel: string) => {
+const userDelSchema = z.string().min(1, { error: "Invalid user id" });
+
+const deleteUser = async (userDel: string) => {
   try {
+    const validatedUserDel = userDelSchema.parse(userDel);
+
     await prisma.user.delete({
       where: {
-        id: UserDel,
+        id: validatedUserDel,
       },
     });
 

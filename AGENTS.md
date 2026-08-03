@@ -36,7 +36,7 @@ Path aliases: `@/*` → `./src/*`, `@generated/*` → `./generated/*`.
 
 ## Project structure
 
-```
+```text
 src/
   app/              # App Router (layout.tsx, page.tsx, globals.css)
   components/
@@ -63,6 +63,7 @@ public/uploads/     # User uploads (all files ignored except .gitkeep)
 
 - **ESLint**: Locked at eslint@9.x until `eslint-plugin-react` ships v10 support. Do NOT bump.
 - **TypeScript**: Currently ^5.9. TS 7.0 (Go-native compiler) blocked until typescript-eslint API stabilizes (~Oct 2026). Do not migrate.
+- The `src/server` directory is organizational only. Modules become Server Functions through the `"use server"` directive; API endpoints must remain `route.ts` files under `src/app`.
 
 ## Form patterns
 

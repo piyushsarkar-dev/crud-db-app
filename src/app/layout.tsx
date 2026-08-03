@@ -3,7 +3,13 @@ import ThemeProvider from "@/components/Providers/ThemeProvider";
 import { geistMono, geistSans, interHeading } from "@/lib/fonts";
 import { LayoutProps } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { Metadata } from "next";
 import "./globals.css";
+
+export const metadata: Metadata = {
+  title: "CRUD DB App",
+  description: "CRUD DB app for managing users.",
+};
 
 const RootLayout = ({ children }: LayoutProps) => {
   return (
@@ -23,7 +29,7 @@ const RootLayout = ({ children }: LayoutProps) => {
           enableSystem={false}>
           <Header />
 
-          <main className="mx-auto max-w-7xl">{children}</main>
+          <main className="mx-auto max-w-7xl pt-20">{children}</main>
         </ThemeProvider>
       </body>
     </html>

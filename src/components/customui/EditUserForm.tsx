@@ -7,7 +7,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderIcon, UserPenIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
-import { toast } from "react-toastify";
 import { Button } from "../shadcnui/button";
 import { Field, FieldError, FieldLabel } from "../shadcnui/field";
 import { Input } from "../shadcnui/input";
@@ -18,6 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../shadcnui/select";
+import { toast } from "../shadcnui/toast";
 
 type EditUserFormProps = {
   userData: User;
@@ -41,14 +41,13 @@ const EditUserForm = ({ userData }: EditUserFormProps) => {
   });
 
   const updateFormHandler = async (fData: RegisterSchematype) => {
-    await new Promise((r) => setTimeout(r, 1500));
     const { isSuccess, message } = await editUser(userData.id, fData);
 
     if (isSuccess) {
-      toast.success(message);
+      toast.add({ type: "success", title: message });
       push("/");
     } else {
-      toast.error(message);
+      toast.add({ type: "error", title: message });
     }
   };
   return (
@@ -70,7 +69,7 @@ const EditUserForm = ({ userData }: EditUserFormProps) => {
               id={field.name}
               aria-invalid={fieldState.invalid}
               placeholder="Full Name"
-              autoComplete="family-name"
+              autoComplete="name"
             />
 
             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}

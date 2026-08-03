@@ -3,8 +3,15 @@
 import deleteUser from "@/server/deleteUser";
 import { Loader2, Trash2 } from "lucide-react";
 import { useState } from "react";
-import { toast } from "react-toastify";
-import { Button } from "../shadcnui/button";
+import {
+  AlertDialog,
+  AlertDialogClose,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogTitle,
+} from "../shadcnui/alert-dialog";
+import { Button, buttonVariants } from "../shadcnui/button";
+import { toast } from "../shadcnui/toast";
 
 type DeleteButtonProps = {
   userDel: string;
@@ -12,40 +19,71 @@ type DeleteButtonProps = {
 
 const DeleteButton = ({ userDel }: DeleteButtonProps) => {
   const [remove, setRemove] = useState(false);
+  const [open, setOpen] = useState(false);
 
-  const handleClean = async () => {
+  const handleClean = () => {
+    setOpen(true);
+  };
+
+  const handleConfirmDelete = async () => {
     setRemove(true);
-
-    await new Promise((r) => setTimeout(r, 1500));
-
     const { isSuccess, message } = await deleteUser(userDel);
 
     if (isSuccess) {
-      toast.success(message);
+      toast.add({ type: "success", title: message });
     } else {
-      toast.error(message);
+      toast.add({ type: "error", title: message });
     }
 
     setRemove(false);
+    setOpen(false);
   };
 
   return (
-    <Button
-      onClick={handleClean}
-      disabled={remove}
-      variant="destructive"
-      className="w-full">
-      {remove ?
-        <>
-          Deleting...
-          <Loader2 className="ml-2 size-4 animate-spin" />
-        </>
-      : <>
-          Delete
-          <Trash2 className="ml-2 size-4" />
-        </>
-      }
-    </Button>
+    <AlertDialog
+      open={open}
+      onOpenChange={setOpen}>
+      <Button
+        onClick={handleClean}
+        disabled={remove}
+        variant="destructive"
+        className="w-full">
+        {remove ?
+          <>
+            Deleting...
+            <Loader2 className="ml-2 size-4 animate-spin" />
+          </>
+        : <>
+            Delete
+            <Trash2 className="ml-2 size-4" />
+          </>
+        }
+      </Button>
+
+      <AlertDialogContent>
+        <AlertDialogTitle>Delete this user?</AlertDialogTitle>
+        <AlertDialogDescription>
+          This action cannot be undone.
+        </AlertDialogDescription>
+
+        <div className="mt-6 flex justify-end gap-3">
+          <AlertDialogClose className={buttonVariants({ variant: "outline" })}>
+            Cancel
+          </AlertDialogClose>
+          <Button
+            variant="destructive"
+            disabled={remove}
+            onClick={handleConfirmDelete}>
+            {remove ?
+              <>
+                Deleting...
+                <Loader2 className="ml-2 size-4 animate-spin" />
+              </>
+            : "Delete"}
+          </Button>
+        </div>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 };
 

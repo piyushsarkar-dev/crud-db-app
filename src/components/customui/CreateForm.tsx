@@ -8,7 +8,6 @@ import { LoaderIcon, RefreshCcwIcon, SendIcon, UserRound } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { toast } from "react-toastify";
 import { Button } from "../shadcnui/button";
 import { Field, FieldError, FieldLabel } from "../shadcnui/field";
 import { Input } from "../shadcnui/input";
@@ -19,6 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../shadcnui/select";
+import { toast } from "../shadcnui/toast";
 
 const CreateForm = () => {
   const { push } = useRouter();
@@ -28,7 +28,6 @@ const CreateForm = () => {
     formState: { isSubmitting },
     reset,
     setValue,
-    clearErrors,
   } = useForm({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
@@ -42,13 +41,11 @@ const CreateForm = () => {
 
   const createFormHandler = async (fData: RegisterSchematype) => {
     const { isSuccess, message } = await createUser(fData);
-    await new Promise((r) => setTimeout(r, 1500));
-    console.log(fData);
     if (isSuccess) {
-      toast.success(message);
+      toast.add({ type: "success", title: message });
       push("/");
     } else {
-      toast.error(message);
+      toast.add({ type: "error", title: message });
     }
   };
 
@@ -61,17 +58,22 @@ const CreateForm = () => {
 
     await new Promise((r) => setTimeout(r, 1500));
 
-    setValue("fullName", fullName);
-    setValue("email", email);
-    setValue("phone", phone);
-    setValue(
-      "gender",
-      gender === "male" ? "Male"
-      : gender === "female" ? "Female"
-      : "Others",
-    );
-
-    clearErrors();
+    setValue("fullName", fullName, {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
+    setValue("email", email, {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
+    setValue("phone", phone, {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
+    setValue("gender", gender, {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
 
     setIsLoading(false);
   };
@@ -153,13 +155,13 @@ const CreateForm = () => {
         render={({ field, fieldState }) => (
           <Field data-invalid={fieldState.invalid}>
             <FieldLabel htmlFor={field.name}>
-              Enter Your Email Adress
+              Enter Your Email Address
             </FieldLabel>
             <Input
               {...field}
               id={field.name}
               aria-invalid={fieldState.invalid}
-              placeholder="Email Adress"
+              placeholder="Email Address"
               autoComplete="email"
             />
 

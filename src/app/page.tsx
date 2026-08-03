@@ -8,7 +8,11 @@ export const metadata: Metadata = {
 };
 
 const page = async () => {
-  const allUsers = await prisma.user.findMany();
+  const allUsers = await prisma.user.findMany({
+    orderBy: {
+      id: "asc",
+    },
+  });
   if (allUsers.length === 0) {
     return (
       <section className="flex h-dvh items-center justify-center">

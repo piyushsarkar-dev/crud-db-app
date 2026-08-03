@@ -1,16 +1,27 @@
 "use server";
 
 import prisma from "@/lib/dbClient/prisma";
-import { RegisterSchematype } from "@/lib/zodSchema";
+import { registerFormSchema, RegisterSchematype } from "@/lib/zodSchema";
 import { revalidatePath } from "next/cache";
 
-const editUser = async (UserDel: string, fData: RegisterSchematype) => {
+const isPrismaUniqueConstraintError = (error: unknown) => {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "code" in error &&
+    (error as { code?: string }).code === "P2002"
+  );
+};
+
+const editUser = async (userDel: string, fData: RegisterSchematype) => {
   try {
+    const validatedData = registerFormSchema.parse(fData);
+
     await prisma.user.update({
       where: {
-        id: UserDel,
+        id: userDel,
       },
-      data: fData,
+      data: validatedData,
     });
 
     revalidatePath("/");
@@ -21,6 +32,13 @@ const editUser = async (UserDel: string, fData: RegisterSchematype) => {
     };
   } catch (error) {
     console.error(error);
+
+    if (isPrismaUniqueConstraintError(error)) {
+      return {
+        isSuccess: false,
+        message: "Email or phone already exists.",
+      };
+    }
 
     return {
       isSuccess: false,

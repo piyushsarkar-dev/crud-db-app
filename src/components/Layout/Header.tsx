@@ -6,15 +6,15 @@ import ThemeToggleButton from "./ThemeToggleButton";
 const Header = () => {
   return (
     <header
-      className="fixed top-0 right-0 left-0 z-50 border-b shadow"
-      aria-label="app-header">
+      className="bg-background/95 fixed top-0 right-0 left-0 z-50 border-b shadow backdrop-blur"
+      aria-label="Main">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
         <Link href={"/"}>
-          <h1
+          <span
             className="text-2xl font-semibold"
             aria-label="App Name">
             CRUD
-          </h1>
+          </span>
         </Link>
 
         <nav className="flex items-center gap-4">

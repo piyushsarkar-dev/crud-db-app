@@ -4,6 +4,10 @@ const generateUserDetails = () => {
   const { person, internet, helpers } = faker;
 
   const gender = person.sexType();
+  const normalizedGender =
+    gender === "male" ? "Male"
+    : gender === "female" ? "Female"
+    : "Others";
 
   const firstName = person.firstName(gender);
   const lastName = person.lastName(gender);
@@ -24,7 +28,7 @@ const generateUserDetails = () => {
     fullName,
     email,
     phone,
-    gender,
+    gender: normalizedGender,
   };
 };
 

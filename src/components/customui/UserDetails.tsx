@@ -1,5 +1,4 @@
 import {
-  BadgeCheckIcon,
   Edit2Icon,
   MailIcon,
   PhoneIcon,
@@ -7,7 +6,6 @@ import {
   VenusAndMarsIcon,
 } from "lucide-react";
 
-import { Badge } from "../shadcnui/badge";
 import { buttonVariants } from "../shadcnui/button";
 import {
   Card,
@@ -18,6 +16,7 @@ import {
 } from "../shadcnui/card";
 
 import { User } from "@generated/prisma/client";
+import type { Route } from "next";
 import Link from "next/link";
 import DeleteButton from "./DeleteButton";
 
@@ -43,16 +42,7 @@ const UserDetails = ({ userData }: UserDetailsProps) => {
             <div className="flex-1">
               <p className="text-muted-foreground text-xs">Full Name</p>
 
-              <div className="mt-1 flex items-center gap-2">
-                <p className="font-medium">{userData.fullName}</p>
-
-                <Badge
-                  variant="secondary"
-                  className="gap-1 rounded-full px-2">
-                  <BadgeCheckIcon className="size-3.5 text-sky-500" />
-                  Verified
-                </Badge>
-              </div>
+              <p className="mt-1 font-medium">{userData.fullName}</p>
             </div>
           </div>
 
@@ -93,7 +83,7 @@ const UserDetails = ({ userData }: UserDetailsProps) => {
 
       <CardFooter className="grid grid-cols-2 gap-3 border-t pt-6">
         <Link
-          href={`/${userData.id}`}
+          href={`/${userData.id}` as Route}
           className={buttonVariants({
             variant: "secondary",
             size: "lg",
