@@ -144,20 +144,6 @@ npm run dev
 
 ## Functionality Explanation
 
-### Create User
-
-```mermaid
-flowchart TD
-  A[Fill form] --> B[React Hook Form]
-  B --> C[Zod validation]
-  C --> D[createUser server action]
-  D --> E[Prisma insert]
-  E --> F[revalidatePath('/')]
-  F --> G[Toast + redirect to home]
-```
-
-The create page renders a centered card with `CreateForm`. The form validates input on the client with Zod, submits to the `createUser` server action, writes to SQLite through Prisma, then revalidates the home route and sends the user back to the list view.
-
 ### Read Users
 
 The home page is a server component that fetches all users with Prisma, orders them by `id`, and renders `UserDetails` cards. If no records exist, it shows a clear empty state instead of an empty grid.
@@ -320,7 +306,7 @@ This project is licensed under the MIT License. See [LICENSE](./LICENSE) for det
 
 GitHub: https://github.com/piyushsarkar-dev/crud-db-app
 
-Email: your-email@example.com
+Email: hi.mrpiyush@gmail.com
 
 ## Acknowledgements
 
